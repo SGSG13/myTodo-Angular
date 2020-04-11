@@ -1,0 +1,21 @@
+<form
+  class="add-form"
+  (ngSubmit)="onSubmit(f)" #f="ngForm"
+>
+  <div class="flex-fill">
+    <input
+      name="title"
+      type="text"
+      class="input"
+      id="title"
+      ngModel
+      required
+    />
+  </div>
+  <div class="flex-fit">
+    <button
+      class="button"
+      type="submit"
+    >Add</button>
+  </div>
+</form>

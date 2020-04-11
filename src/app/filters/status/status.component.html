@@ -1,0 +1,10 @@
+<div class="flex-fit">
+  <button
+    *ngFor="let button of buttons"
+    class="button"
+    [class.button_active]="button.name === activeStatus"
+    (click)="handleChangeStatus(button.name)"
+  >
+    {{ button.label}}
+  </button>
+</div>

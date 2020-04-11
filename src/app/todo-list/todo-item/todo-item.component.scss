@@ -1,0 +1,14 @@
+.todo-list__item {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 10px 0 10px 20px;
+}
+
+.todo-list__title {
+  cursor: pointer;
+}
+
+.todo-list__title_done {
+  text-decoration: line-through;
+}

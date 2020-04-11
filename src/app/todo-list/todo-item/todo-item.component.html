@@ -1,0 +1,17 @@
+<li class="todo-list__item">
+  <div class="flex-fill">
+    <span
+      class="todo-list__title"
+      [class.todo-list__title_done]="item.done"
+      (click)="handleDoneTodo(item.id)"
+    >
+    {{ item.title }}
+    </span>
+  </div>
+  <div class="flex-fit">
+    <button
+      class="button"
+      (click)="handleRemoveTodo(item.id)"
+    >X</button>
+  </div>
+</li>

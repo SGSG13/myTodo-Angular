@@ -1,0 +1,24 @@
+<app-loader *ngIf="isLoading; else list"></app-loader>
+
+<ng-template #list>
+  <div
+    class="todo-list"
+    [class.todo-list_empty]="items.length === 0 && !isLoading"
+  >
+    <div
+      class="text-center"
+      *ngIf="items.length === 0 && !isLoading && !error"
+    >List is empty :(</div>
+    <div
+      class="text-center"
+      *ngIf="!!error"
+    >{{ error }}</div>
+    <ul>
+      <app-todo-item
+        *ngFor="let item of items | filter: filters.status : filters.search"
+        [item]="item"
+      ></app-todo-item>
+    </ul>
+  </div>
+
+</ng-template>
