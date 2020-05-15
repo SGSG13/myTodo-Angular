@@ -6,7 +6,7 @@ import {of} from "rxjs";
 
 import * as TodoActions from './todo.actions';
 import {CustomAction, TodoResponseData} from "../../shared/interfaces";
-import {normalizedData} from "../../shared/utils";
+
 
 
 @Injectable()
@@ -15,10 +15,9 @@ export class TodoEffects {
   loadItems = this.actions$.pipe(
     ofType(TodoActions.LOAD_ITEMS_REQUEST),
     switchMap(() => {
-      return this.http.get<TodoResponseData>('/api/get');
+      return this.http.get<TodoResponseData>('/api/todos');
     }),
-    map(res => normalizedData(res.items)),
-    map(items => new TodoActions.LoadItemsSuccess(items)),
+    map(res => new TodoActions.LoadItemsSuccess(res.items)),
     catchError(errorRes=> {
       return of(new TodoActions.LoadItemsFail(errorRes.message))
     })
@@ -28,9 +27,9 @@ export class TodoEffects {
   doneItem = this.actions$.pipe(
     ofType(TodoActions.DONE_ITEM),
     switchMap((action: CustomAction) => {
-      return this.http.post(
-        '/api/done',
-        {id: action.payload}
+      return this.http.put(
+        `/api/todo/${action.payload}`,
+        {}
       )
     })
   );
@@ -39,10 +38,7 @@ export class TodoEffects {
   removeItem = this.actions$.pipe(
     ofType(TodoActions.REMOVE_ITEM),
     switchMap((action: CustomAction) => {
-      return this.http.post(
-        '/api/remove',
-        {id: action.payload}
-      )
+      return this.http.delete(`/api/todo/${action.payload}`,)
     })
   );
 
@@ -51,7 +47,7 @@ export class TodoEffects {
     ofType(TodoActions.ADD_ITEM),
     switchMap((action: CustomAction) => {
       return this.http.post(
-        '/api/add',
+        '/api/todo',
         {title: action.payload}
       )
     })

@@ -5,7 +5,6 @@ import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as TodoActions from '../todo-list/store/todo.actions';
 
-import {normalizedData} from "../shared/utils";
 import {TodoResponseData} from "../shared/interfaces";
 
 @Injectable({
@@ -19,8 +18,8 @@ export class TodoSocketService {
 
   initSocket() {
     this.socket = io('http://localhost:3001');
-    this.socket.on('change-todo', (data: TodoResponseData) => {
-      this.store.dispatch(new TodoActions.LoadItemsSuccess(normalizedData(data.items)))
+    this.socket.on('changeTodo', (data: TodoResponseData) => {
+      this.store.dispatch(new TodoActions.LoadItemsSuccess(data.items))
       }
     )
   }

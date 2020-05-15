@@ -3,15 +3,14 @@ const express = require('express');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const TodoItem = require('./models/todoItem');
+const Todo = require('./models/todo');
 const api = require('./api');
+const config = require('./config');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-const port = 3001;
-const databaseUrl = 'mongodb+srv://admin:RoPchyUyTldo1slL@cluster0-3nevw.mongodb.net/todolist?retryWrites=true&w=majority';
 
 app.use(bodyParser.json());
 app.use('/api', api);
@@ -19,31 +18,24 @@ app.use('/api', api);
 
 async function startApp() {
     try {
-        await mongoose.connect(databaseUrl, {
+        await mongoose.connect(config.databaseUrl, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
         });
-        server.listen(port, () => console.log(`Server has started.`));
-
+        server.listen(config.port, () => console.log(`Server has started.`));
         io.on('connection', function (socket) {
-            console.log('=====CONNECT=====');
-            const changeStream = TodoItem.watch();
-
+            const changeStream = Todo.watch();
             changeStream.on('change', async () => {
-                const items = await TodoItem.getItems();
-                socket.emit('change-todo', {items});
+                const items = await Todo.getTodos();
+                socket.emit('changeTodo', {items});
             });
-          socket.on('disconnect', function() {
-            console.log('=====DISCONNECT=====');
-          });
         });
     } catch (e) {
         console.log('error', e)
     }
 }
 
-startApp()
+startApp();
 
-module.exports = io;
 

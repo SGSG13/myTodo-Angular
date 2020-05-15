@@ -6,15 +6,8 @@ export interface Todo {
   done: boolean
 }
 
-export interface TodoItemFromServer {
-  title: string;
-  _id: string;
-  done: boolean;
-  __v: number;
-}
-
 export interface TodoResponseData {
-  items: TodoItemFromServer[];
+  items: Todo[];
 }
 
 export interface CustomAction extends Action {
