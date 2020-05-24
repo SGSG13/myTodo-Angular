@@ -18,7 +18,6 @@ export function todoReducer(
   state = initialState,
   action: TodoActions.TodoActionsType,
 ) {
-  console.log('action', action)
   switch (action.type) {
     case TodoActions.LOAD_ITEMS_REQUEST:
       return Object.assign({...state}, { loading: true, error: null });
