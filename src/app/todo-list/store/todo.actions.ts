@@ -3,7 +3,7 @@ import { Todo } from "../../shared/interfaces";
 
 export const LOAD_ITEMS_REQUEST = '[Todo] Load Items Request';
 export const LOAD_ITEMS_SUCCESS = '[Todo] Load Items Success';
-export const LOAD_ITEMS_FAIL = '[Todo] Load Items Fail';
+export const RESPONSE_FAIL = '[Todo] Response fail';
 export const REMOVE_ITEM = '[Todo] Remove Item';
 export const DONE_ITEM = '[Todo] Done Item';
 export const ADD_ITEM = '[Todo] Add Item';
@@ -22,8 +22,8 @@ export class LoadItemsSuccess implements Action {
   }
 }
 
-export class LoadItemsFail implements Action {
-  readonly type = LOAD_ITEMS_FAIL;
+export class ResponseFail implements Action {
+  readonly type = RESPONSE_FAIL;
   public error: string;
 
   constructor(error: string) {
@@ -58,10 +58,10 @@ export class AddItem implements Action {
   }
 }
 
-export type TodoActions =
+export type TodoActionsType =
   | LoadItemsRequest
   | LoadItemsSuccess
-  | LoadItemsFail
+  | ResponseFail
   | RemoveItem
   | DoneItem
   | AddItem;
